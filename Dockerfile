@@ -1,8 +1,7 @@
+#FROM debian:stretch-slim
 FROM debian:jessie
 
 # Set the username
-ENV UNAME user
-
 RUN set -ex \
     # Official Mopidy install for Debian/Ubuntu along with some extensions
     # (see https://docs.mopidy.com/en/latest/installation/debian/ )
@@ -34,11 +33,17 @@ RUN set -ex \
         curl \
         gcc \
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache \
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
+
+ENV UNAME user
+
+# Default configuration
+COPY mopidy.conf /home/${UNAME}/.config/mopidy/mopidy.conf
+
+RUN set -ex \
  # Create the user
- && useradd -m -d /home/${UNAME} ${UNAME} \
+ && useradd --create-home ${UNAME} \
  # Create the config dir
- && mkdir -p /home/${UNAME}/.config/mopidy/ \
  && chown -R ${UNAME} /home/${UNAME}/
 
 # Copy the pulse-client configuratrion
@@ -46,9 +51,6 @@ COPY pulse-client.conf /etc/pulse/client.conf
 
 # Run as user
 USER ${UNAME}
-
-# Default configuration
-COPY mopidy.conf /home/${UNAME}/.config/mopidy/mopidy.conf
 
 VOLUME ["/var/lib/mopidy/local", "/var/lib/mopidy/media"]
 

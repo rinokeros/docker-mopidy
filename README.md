@@ -20,28 +20,28 @@ You may install additional [backend extensions](https://docs.mopidy.com/en/lates
 ### Usage
 
 #### PulseAudio over network
-    
-    Mount the current user's pulse directory to the pulseuadio user (id - 105)
-    Based on: https://github.com/TheBiggerGuy/docker-pulseaudio-example
+
+Mount the current user's pulse directory to the pulseuadio user (id `105`).
+Based on https://github.com/TheBiggerGuy/docker-pulseaudio-example
 
     $ docker run -d \
-      -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
-      -p 6600:6600 -p 6680:6680 \
-      wernight/mopidy 
+        -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
+        -p 6600:6600 -p 6680:6680 \
+        wernight/mopidy
 
 
 #### General usage
 
     $ docker run -d \
-          -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
-          -v "$PWD/media:/var/lib/mopidy/media:ro" \
-          -v "$PWD/local:/var/lib/mopidy/local" \
-          -p 6600:6600 -p 6680:6680 \
-          wernight/mopidy \
-          mopidy \
-          -o spotify/username=USERNAME -o spotify/password=PASSWORD \
-          -o gmusic/username=USERNAME -o gmusic/password=PASSWORD \
-          -o soundcloud/auth_token=TOKEN
+        -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
+        -v "$PWD/media:/var/lib/mopidy/media:ro" \
+        -v "$PWD/local:/var/lib/mopidy/local" \
+        -p 6600:6600 -p 6680:6680 \
+        wernight/mopidy \
+        mopidy \
+        -o spotify/username=USERNAME -o spotify/password=PASSWORD \
+        -o gmusic/username=USERNAME -o gmusic/password=PASSWORD \
+        -o soundcloud/auth_token=TOKEN
 
 See [mopidy's command](https://docs.mopidy.com/en/latest/command/) for possible additional options.
 
@@ -68,28 +68,28 @@ Volumes:
  2. Index local files:
 
         $ docker run --rm \
-              -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
-              -v "$PWD/media:/var/lib/mopidy/media:ro" \
-              -v "$PWD/local:/var/lib/mopidy/local" \
-              -p 6680:6680 \
-              wernight/mopidy mopidy local scan
+            -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
+            -v "$PWD/media:/var/lib/mopidy/media:ro" \
+            -v "$PWD/local:/var/lib/mopidy/local" \
+            -p 6680:6680 \
+            wernight/mopidy mopidy local scan
 
  3. Start the server:
 
         $ docker run -d \
-              -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
-              -v "$PWD/media:/var/lib/mopidy/media:ro" \
-              -v "$PWD/local:/var/lib/mopidy/local" \
-              -p 6680:6680 \
-              wernight/mopidy
+            -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
+            -v "$PWD/media:/var/lib/mopidy/media:ro" \
+            -v "$PWD/local:/var/lib/mopidy/local" \
+            -p 6680:6680 \
+            wernight/mopidy
 
  4. Browse to http://localhost:6680/
 
 #### Example using [ncmpcpp](https://docs.mopidy.com/en/latest/clients/mpd/#ncmpcpp) MPD console client
 
     $ docker run --name mopidy -d \
-          -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
-          wernight/mopidy
+        -v /run/user/$(id -u)/pulse:/run/user/105/pulse \
+        wernight/mopidy
     $ docker run --rm -it --link mopidy:mopidy wernight/ncmpcpp ncmpcpp --host mopidy
 
 
