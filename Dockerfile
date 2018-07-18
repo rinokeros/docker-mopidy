@@ -29,8 +29,6 @@ RUN set -ex \
  && pip install -U six \
  && pip install \
         Mopidy-Moped \
-        Mopidy-GMusic \
-        Mopidy-YouTube \
         pyasn1==0.3.2 \
     # Clean-up
  && apt-get purge --auto-remove -y \
