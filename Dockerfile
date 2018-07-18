@@ -23,7 +23,7 @@ RUN curl -L https://apt.mopidy.com/mopidy.gpg | apt-key add -
 RUN curl -L https://apt.mopidy.com/mopidy.list -o /etc/apt/sources.list.d/mopidy.list
 
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
         mopidy
         
 RUN curl -L https://bootstrap.pypa.io/get-pip.py | python -
